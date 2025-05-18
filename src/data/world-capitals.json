@@ -86,7 +86,8 @@
 		"longitude": "-61.850000",
 		"countryCode2": "AG",
 		"continentName": "North America",
-		"countryCode3": "ATG"
+		"countryCode3": "ATG",
+		"famousFor": "Caribbean beaches, sailing, and tourism."
 	},
 	{
 		"countryName": "Argentina",
@@ -95,7 +96,8 @@
 		"longitude": "-58.666667",
 		"countryCode2": "AR",
 		"continentName": "South America",
-		"countryCode3": "ARG"
+		"countryCode3": "ARG",
+		"famousFor": "Tango, beef, Patagonia, and football."
 	},
 	{
 		"countryName": "Armenia",
@@ -104,7 +106,8 @@
 		"longitude": "44.500000",
 		"countryCode2": "AM",
 		"continentName": "Europe",
-		"countryCode3": "ARM"
+		"countryCode3": "ARM",
+		"famousFor": "Ancient monasteries, Mount Ararat, and apricots."
 	},
 	{
 		"countryName": "Aruba",
@@ -113,7 +116,8 @@
 		"longitude": "-70.033333",
 		"countryCode2": "AW",
 		"continentName": "North America",
-		"countryCode3": "ABW"
+		"countryCode3": "ABW",
+		"famousFor": "Dutch Caribbean island, beaches, and tourism."
 	},
 	{
 		"countryName": "Australia",
@@ -122,7 +126,8 @@
 		"longitude": "149.133333",
 		"countryCode2": "AU",
 		"continentName": "Australia",
-		"countryCode3": "AUS"
+		"countryCode3": "AUS",
+		"famousFor": "Kangaroos, Sydney Opera House, and the Outback."
 	},
 	{
 		"countryName": "Austria",
@@ -131,7 +136,8 @@
 		"longitude": "16.366667",
 		"countryCode2": "AT",
 		"continentName": "Europe",
-		"countryCode3": "AUT"
+		"countryCode3": "AUT",
+		"famousFor": "Alps, classical music, and Vienna."
 	},
 	{
 		"countryName": "Azerbaijan",
@@ -140,7 +146,8 @@
 		"longitude": "49.866667",
 		"countryCode2": "AZ",
 		"continentName": "Europe",
-		"countryCode3": "AZE"
+		"countryCode3": "AZE",
+		"famousFor": "Caspian Sea, oil, and the city of Baku."
 	},
 	{
 		"countryName": "Bahamas",
@@ -149,7 +156,8 @@
 		"longitude": "-77.350000",
 		"countryCode2": "BS",
 		"continentName": "North America",
-		"countryCode3": "BHS"
+		"countryCode3": "BHS",
+		"famousFor": "Beaches, coral reefs, and tourism."
 	},
 	{
 		"countryName": "Bahrain",
@@ -541,7 +549,8 @@
 		"longitude": "178.416667",
 		"countryCode2": "FJ",
 		"continentName": "Australia",
-		"countryCode3": "FJI"
+		"countryCode3": "FJI",
+		"famousFor": "Islands, coral reefs, and hospitality."
 	},
 	{
 		"countryName": "Finland",
@@ -550,7 +559,8 @@
 		"longitude": "24.933333",
 		"countryCode2": "FI",
 		"continentName": "Europe",
-		"countryCode3": "FIN"
+		"countryCode3": "FIN",
+		"famousFor": "Saunas, lakes, and Northern Lights."
 	},
 	{
 		"countryName": "France",
@@ -598,7 +608,8 @@
 		"longitude": "44.833333",
 		"countryCode2": "GE",
 		"continentName": "Europe",
-		"countryCode3": "GEO"
+		"countryCode3": "GEO",
+		"famousFor": "Caucasus mountains, wine, and ancient churches."
 	},
 	{
 		"countryName": "Germany",
@@ -607,7 +618,8 @@
 		"longitude": "13.400000",
 		"countryCode2": "DE",
 		"continentName": "Europe",
-		"countryCode3": "DEU"
+		"countryCode3": "DEU",
+		"famousFor": "Beer, castles, Berlin Wall, and engineering."
 	},
 	{
 		"countryName": "Ghana",
@@ -2068,7 +2080,8 @@
 		"longitude": "33.366667",
 		"countryCode2": "CY",
 		"continentName": "Europe",
-		"countryCode3": "CYP"
+		"countryCode3": "CYP",
+		"famousFor": "Disputed territory, divided capital, and Mediterranean culture."
 	},
 	{
 		"countryName": "Hong Kong",
@@ -2087,7 +2100,8 @@
 		"longitude": "0.000000",
 		"countryCode2": "HM",
 		"continentName": "Antarctica",
-		"countryCode3": "HMD"
+		"countryCode3": "HMD",
+		"famousFor": "Remote, volcanic islands, and wildlife."
 	},
 	{
 		"countryName": "British Indian Ocean Territory",
@@ -2096,7 +2110,8 @@
 		"longitude": "72.400000",
 		"countryCode2": "IO",
 		"continentName": "Africa",
-		"countryCode3": "IOT"
+		"countryCode3": "IOT",
+		"famousFor": "Military base, remote atolls, and Indian Ocean."
 	},
 	{
 		"countryName": "Macau",
