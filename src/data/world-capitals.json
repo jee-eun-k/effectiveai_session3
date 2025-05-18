@@ -26,7 +26,8 @@
 		"longitude": "19.816667",
 		"countryCode2": "AL",
 		"continentName": "Europe",
-		"countryCode3": "ALB"
+		"countryCode3": "ALB",
+		"famousFor": "Adriatic coast, bunkers, and unique language."
 	},
 	{
 		"countryName": "Algeria",
@@ -35,7 +36,8 @@
 		"longitude": "3.050000",
 		"countryCode2": "DZ",
 		"continentName": "Africa",
-		"countryCode3": "DZA"
+		"countryCode3": "DZA",
+		"famousFor": "Sahara Desert, Roman ruins, and Mediterranean coast."
 	},
 	{
 		"countryName": "American Samoa",
@@ -44,7 +46,8 @@
 		"longitude": "-170.700000",
 		"countryCode2": "AS",
 		"continentName": "Australia",
-		"countryCode3": "ASM"
+		"countryCode3": "ASM",
+		"famousFor": "Polynesian culture, national parks, and tuna industry."
 	},
 	{
 		"countryName": "Andorra",
@@ -53,7 +56,8 @@
 		"longitude": "1.516667",
 		"countryCode2": "AD",
 		"continentName": "Europe",
-		"countryCode3": "AND"
+		"countryCode3": "AND",
+		"famousFor": "Pyrenees mountains, ski resorts, and tax-free shopping."
 	},
 	{
 		"countryName": "Angola",
@@ -62,7 +66,8 @@
 		"longitude": "13.216667",
 		"countryCode2": "AO",
 		"continentName": "Africa",
-		"countryCode3": "AGO"
+		"countryCode3": "AGO",
+		"famousFor": "Oil, Atlantic beaches, and post-war recovery."
 	},
 	{
 		"countryName": "Anguilla",
@@ -71,7 +76,8 @@
 		"longitude": "-63.050000",
 		"countryCode2": "AI",
 		"continentName": "North America",
-		"countryCode3": "AIA"
+		"countryCode3": "AIA",
+		"famousFor": "White sand beaches, coral reefs, and tranquility."
 	},
 	{
 		"countryName": "Antigua and Barbuda",
@@ -465,7 +471,8 @@
 		"longitude": "-89.200000",
 		"countryCode2": "SV",
 		"continentName": "Central America",
-		"countryCode3": "SLV"
+		"countryCode3": "SLV",
+		"famousFor": "Volcanoes, coffee, and Pacific beaches."
 	},
 	{
 		"countryName": "Equatorial Guinea",
@@ -474,10 +481,12 @@
 		"longitude": "8.783333",
 		"countryCode2": "GQ",
 		"continentName": "Africa",
-		"countryCode3": "GNQ"
+		"countryCode3": "GNQ",
+		"famousFor": "Oil reserves, rainforests, and Spanish colonial heritage."
 	},
 	{
 		"countryName": "Eritrea",
+		"famousFor": "Red Sea coast, Italian architecture, and cycling.",
 		"capital": "Asmara",
 		"latitude": "15.333333333333334",
 		"longitude": "38.933333",
@@ -492,7 +501,8 @@
 		"longitude": "24.716667",
 		"countryCode2": "EE",
 		"continentName": "Europe",
-		"countryCode3": "EST"
+		"countryCode3": "EST",
+		"famousFor": "Medieval old town, digital society, and song festivals."
 	},
 	{
 		"countryName": "Ethiopia",
@@ -501,7 +511,8 @@
 		"longitude": "38.700000",
 		"countryCode2": "ET",
 		"continentName": "Africa",
-		"countryCode3": "ETH"
+		"countryCode3": "ETH",
+		"famousFor": "Ancient civilization, coffee origin, and highlands."
 	},
 	{
 		"countryName": "Falkland Islands",
@@ -510,7 +521,8 @@
 		"longitude": "-57.850000",
 		"countryCode2": "FK",
 		"continentName": "South America",
-		"countryCode3": "FLK"
+		"countryCode3": "FLK",
+		"famousFor": "Penguins, remote landscapes, and 1982 conflict."
 	},
 	{
 		"countryName": "Faroe Islands",
@@ -519,7 +531,8 @@
 		"longitude": "-6.766667",
 		"countryCode2": "FO",
 		"continentName": "Europe",
-		"countryCode3": "FRO"
+		"countryCode3": "FRO",
+		"famousFor": "Dramatic cliffs, sheep, and North Atlantic weather."
 	},
 	{
 		"countryName": "Fiji",
@@ -555,7 +568,8 @@
 		"longitude": "-149.566667",
 		"countryCode2": "PF",
 		"continentName": "Australia",
-		"countryCode3": "PYF"
+		"countryCode3": "PYF",
+		"famousFor": "Tahiti, overwater bungalows, and tropical lagoons."
 	},
 	{
 		"countryName": "Gabon",
@@ -564,7 +578,8 @@
 		"longitude": "9.450000",
 		"countryCode2": "GA",
 		"continentName": "Africa",
-		"countryCode3": "GAB"
+		"countryCode3": "GAB",
+		"famousFor": "Rainforests, wildlife parks, and oil."
 	},
 	{
 		"countryName": "The Gambia",
@@ -573,7 +588,8 @@
 		"longitude": "-16.566667",
 		"countryCode2": "GM",
 		"continentName": "Africa",
-		"countryCode3": "GMB"
+		"countryCode3": "GMB",
+		"famousFor": "River Gambia, wildlife, and vibrant culture."
 	},
 	{
 		"countryName": "Georgia",
@@ -681,7 +697,7 @@
 		"countryCode2": "GN",
 		"continentName": "Africa",
 		"countryCode3": "GIN",
-		"famousFor": "Bauxite mining, music, and rivers."
+		"famousFor": "Mount Nimba, bauxite, and music traditions."
 	},
 	{
 		"countryName": "Guinea-Bissau",
@@ -691,7 +707,7 @@
 		"countryCode2": "GW",
 		"continentName": "Africa",
 		"countryCode3": "GNB",
-		"famousFor": "Bijagos Archipelago, cashew nuts, and political instability."
+		"famousFor": "Bijagos Islands, cashew nuts, and diverse ethnic groups."
 	},
 	{
 		"countryName": "Guyana",
@@ -701,7 +717,7 @@
 		"countryCode2": "GY",
 		"continentName": "South America",
 		"countryCode3": "GUY",
-		"famousFor": "Rainforests, waterfalls, and diverse cultures."
+		"famousFor": "Kaieteur Falls, rainforests, and multicultural heritage."
 	},
 	{
 		"countryName": "Haiti",
@@ -730,7 +746,8 @@
 		"longitude": "-87.216667",
 		"countryCode2": "HN",
 		"continentName": "Central America",
-		"countryCode3": "HND"
+		"countryCode3": "HND",
+		"famousFor": "Mayan ruins, Caribbean coast, and biodiversity."
 	},
 	{
 		"countryName": "Hungary",
@@ -739,7 +756,8 @@
 		"longitude": "19.083333",
 		"countryCode2": "HU",
 		"continentName": "Europe",
-		"countryCode3": "HUN"
+		"countryCode3": "HUN",
+		"famousFor": "Thermal baths, paprika, and Danube River."
 	},
 	{
 		"countryName": "Iceland",
@@ -748,7 +766,8 @@
 		"longitude": "-21.950000",
 		"countryCode2": "IS",
 		"continentName": "Europe",
-		"countryCode3": "ISL"
+		"countryCode3": "ISL",
+		"famousFor": "Volcanoes, geysers, hot springs, and northern lights."
 	},
 	{
 		"countryName": "India",
@@ -757,7 +776,8 @@
 		"longitude": "77.200000",
 		"countryCode2": "IN",
 		"continentName": "Asia",
-		"countryCode3": "IND"
+		"countryCode3": "IND",
+		"famousFor": "Diverse cultures, Taj Mahal, spices, and Bollywood."
 	},
 	{
 		"countryName": "Indonesia",
@@ -766,7 +786,8 @@
 		"longitude": "106.816667",
 		"countryCode2": "ID",
 		"continentName": "Asia",
-		"countryCode3": "IDN"
+		"countryCode3": "IDN",
+		"famousFor": "Islands, volcanoes, Bali, and diverse cultures."
 	},
 	{
 		"countryName": "Iran",
@@ -775,7 +796,8 @@
 		"longitude": "51.416667",
 		"countryCode2": "IR",
 		"continentName": "Asia",
-		"countryCode3": "IRN"
+		"countryCode3": "IRN",
+		"famousFor": "Persian Empire, poetry, carpets, and ancient sites."
 	},
 	{
 		"countryName": "Iraq",
@@ -784,7 +806,8 @@
 		"longitude": "44.400000",
 		"countryCode2": "IQ",
 		"continentName": "Asia",
-		"countryCode3": "IRQ"
+		"countryCode3": "IRQ",
+		"famousFor": "Mesopotamia, ancient civilizations, and Tigris-Euphrates."
 	},
 	{
 		"countryName": "Ireland",
@@ -793,7 +816,8 @@
 		"longitude": "-6.233333",
 		"countryCode2": "IE",
 		"continentName": "Europe",
-		"countryCode3": "IRL"
+		"countryCode3": "IRL",
+		"famousFor": "Emerald Isle, Guinness, literature, and Celtic culture."
 	},
 	{
 		"countryName": "Isle of Man",
@@ -802,7 +826,8 @@
 		"longitude": "-4.483333",
 		"countryCode2": "IM",
 		"continentName": "Europe",
-		"countryCode3": "IMN"
+		"countryCode3": "IMN",
+		"famousFor": "TT motorcycle races, Celtic history, and low taxes."
 	},
 	{
 		"countryName": "Israel",
@@ -811,7 +836,8 @@
 		"longitude": "35.233333",
 		"countryCode2": "IL",
 		"continentName": "Asia",
-		"countryCode3": "ISR"
+		"countryCode3": "ISR",
+		"famousFor": "Holy sites, Dead Sea, and high-tech innovation."
 	},
 	{
 		"countryName": "Italy",
@@ -820,7 +846,8 @@
 		"longitude": "12.483333",
 		"countryCode2": "IT",
 		"continentName": "Europe",
-		"countryCode3": "ITA"
+		"countryCode3": "ITA",
+		"famousFor": "Roman history, art, cuisine, and fashion."
 	},
 	{
 		"countryName": "Jamaica",
@@ -829,7 +856,8 @@
 		"longitude": "-76.800000",
 		"countryCode2": "JM",
 		"continentName": "North America",
-		"countryCode3": "JAM"
+		"countryCode3": "JAM",
+		"famousFor": "Reggae music, beaches, and Blue Mountain coffee."
 	},
 	{
 		"countryName": "Japan",
@@ -838,7 +866,8 @@
 		"longitude": "139.750000",
 		"countryCode2": "JP",
 		"continentName": "Asia",
-		"countryCode3": "JPN"
+		"countryCode3": "JPN",
+		"famousFor": "Cherry blossoms, Mount Fuji, technology, and sushi."
 	},
 	{
 		"countryName": "Jersey",
@@ -847,7 +876,8 @@
 		"longitude": "-2.100000",
 		"countryCode2": "JE",
 		"continentName": "Europe",
-		"countryCode3": "JEY"
+		"countryCode3": "JEY",
+		"famousFor": "Channel Islands, finance, and Norman heritage."
 	},
 	{
 		"countryName": "Jordan",
@@ -856,7 +886,8 @@
 		"longitude": "35.933333",
 		"countryCode2": "JO",
 		"continentName": "Asia",
-		"countryCode3": "JOR"
+		"countryCode3": "JOR",
+		"famousFor": "Petra, Dead Sea, and desert landscapes."
 	},
 	{
 		"countryName": "Kazakhstan",
@@ -865,7 +896,8 @@
 		"longitude": "71.416667",
 		"countryCode2": "KZ",
 		"continentName": "Asia",
-		"countryCode3": "KAZ"
+		"countryCode3": "KAZ",
+		"famousFor": "Steppe, Baikonur Cosmodrome, and nomadic culture."
 	},
 	{
 		"countryName": "Kenya",
@@ -874,7 +906,8 @@
 		"longitude": "36.816667",
 		"countryCode2": "KE",
 		"continentName": "Africa",
-		"countryCode3": "KEN"
+		"countryCode3": "KEN",
+		"famousFor": "Safari wildlife, Mount Kenya, and Maasai culture."
 	},
 	{
 		"countryName": "Kiribati",
@@ -883,7 +916,8 @@
 		"longitude": "169.533333",
 		"countryCode2": "KI",
 		"continentName": "Australia",
-		"countryCode3": "KIR"
+		"countryCode3": "KIR",
+		"famousFor": "Pacific atolls, international date line, and WWII history."
 	},
 	{
 		"countryName": "North Korea",
@@ -1324,7 +1358,8 @@
 		"longitude": "134.633333",
 		"countryCode2": "PW",
 		"continentName": "Australia",
-		"countryCode3": "PLW"
+		"countryCode3": "PLW",
+		"famousFor": "Pristine islands, jellyfish lake, and marine biodiversity."
 	},
 	{
 		"countryName": "Panama",
@@ -1333,7 +1368,8 @@
 		"longitude": "-79.533333",
 		"countryCode2": "PA",
 		"continentName": "Central America",
-		"countryCode3": "PAN"
+		"countryCode3": "PAN",
+		"famousFor": "Panama Canal, diverse wildlife, and connecting continents."
 	},
 	{
 		"countryName": "Papua New Guinea",
@@ -1342,12 +1378,14 @@
 		"longitude": "147.183333",
 		"countryCode2": "PG",
 		"continentName": "Australia",
-		"countryCode3": "PNG"
+		"countryCode3": "PNG",
+		"famousFor": "Tribal cultures, rainforests, and biodiversity."
 	},
 	{
 		"countryName": "Paraguay",
 		"capital": "Asuncion",
 		"latitude": "-25.266666666666666",
+		"famousFor": "Guarani culture, rivers, and heart of South America.",
 		"longitude": "-57.666667",
 		"countryCode2": "PY",
 		"continentName": "South America",
@@ -1360,7 +1398,8 @@
 		"longitude": "-77.050000",
 		"countryCode2": "PE",
 		"continentName": "South America",
-		"countryCode3": "PER"
+		"countryCode3": "PER",
+		"famousFor": "Machu Picchu, Andes mountains, and Inca heritage."
 	},
 	{
 		"countryName": "Philippines",
@@ -1369,7 +1408,8 @@
 		"longitude": "120.966667",
 		"countryCode2": "PH",
 		"continentName": "Asia",
-		"countryCode3": "PHL"
+		"countryCode3": "PHL",
+		"famousFor": "Islands, beaches, festivals, and vibrant culture."
 	},
 	{
 		"countryName": "Pitcairn Islands",
@@ -1378,7 +1418,8 @@
 		"longitude": "-130.083333",
 		"countryCode2": "PN",
 		"continentName": "Australia",
-		"countryCode3": "PCN"
+		"countryCode3": "PCN",
+		"famousFor": "Mutiny on the Bounty, remote island community."
 	},
 	{
 		"countryName": "Poland",
@@ -1387,7 +1428,8 @@
 		"longitude": "21.000000",
 		"countryCode2": "PL",
 		"continentName": "Europe",
-		"countryCode3": "POL"
+		"countryCode3": "POL",
+		"famousFor": "Medieval cities, Chopin, and resilient history."
 	},
 	{
 		"countryName": "Portugal",

@@ -379,91 +379,89 @@ export default function Home() {
 					</p>
 					<form
 						onSubmit={handleGuess}
-						style={{ marginBottom: 20, position: 'relative' }}
+						style={{ marginBottom: 20, display: 'flex', alignItems: 'center' }}
 						autoComplete='off'
 					>
-						<input
-							ref={inputRef}
-							type='text'
-							value={input}
-							onChange={(e) => {
-								setInput(e.target.value);
-								setShowSuggestions(true);
-								setHighlighted(-1);
-							}}
-							placeholder='Type country name...'
-							disabled={gameOver}
-							style={{ padding: 8, fontSize: 16, width: '70%' }}
-							autoComplete='off'
-							onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-							onFocus={() => setShowSuggestions(true)}
-							onKeyDown={(e) => {
-								if (!suggestions.length) return;
-								if (e.key === 'ArrowDown') {
-									setHighlighted((h) => Math.min(h + 1, suggestions.length - 1));
-								} else if (e.key === 'ArrowUp') {
-									setHighlighted((h) => Math.max(h - 1, 0));
-								} else if (e.key === 'Enter') {
-									if (highlighted >= 0 && suggestions[highlighted]) {
-										setInput(suggestions[highlighted]);
-										setShowSuggestions(false);
-										setHighlighted(-1);
-										e.preventDefault();
-									}
-								}
-							}}
-						/>
-						{/* Autocomplete dropdown */}
-						{showSuggestions && suggestions.length > 0 && (
-							<ul
-								style={{
-									position: 'absolute',
-									zIndex: 10,
-									background: '#fff',
-									border: '1px solid #ddd',
-									width: '70%',
-									maxHeight: 180,
-									overflowY: 'auto',
-									margin: 0,
-									padding: 0,
-									listStyle: 'none',
-									borderRadius: 4,
-									boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+						<div style={{ position: 'relative', width: '70%' }}>
+							<input
+								ref={inputRef}
+								type='text'
+								value={input}
+								onChange={(e) => {
+									setInput(e.target.value);
+									setHighlighted(-1);
+									e.preventDefault();
 								}}
-							>
-								{suggestions.map((s, i) => (
-									<li
-										key={s}
-										onMouseDown={() => {
-											setInput(s);
+								placeholder='Type country name...'
+								disabled={gameOver}
+								style={{ padding: 8, fontSize: 16, width: '100%' }}
+								autoComplete='off'
+								onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+								onFocus={() => setShowSuggestions(true)}
+								onKeyDown={(e) => {
+									if (!suggestions.length) return;
+									if (e.key === 'ArrowDown') {
+										setHighlighted((h) => Math.min(h + 1, suggestions.length - 1));
+									} else if (e.key === 'ArrowUp') {
+										setHighlighted((h) => Math.max(h - 1, 0));
+									} else if (e.key === 'Enter') {
+										if (highlighted >= 0 && suggestions[highlighted]) {
+											setInput(suggestions[highlighted]);
 											setShowSuggestions(false);
 											setHighlighted(-1);
-											inputRef.current?.focus();
-										}}
-										style={{
-											padding: 8,
-											background: i === highlighted ? '#e6f0ff' : '#fff',
-											cursor: 'pointer',
-										}}
-									>
-										{s}
-									</li>
-								))}
-							</ul>
-						)}
+											e.preventDefault();
+										}
+									}
+								}}
+							/>
+							{showSuggestions && suggestions.length > 0 && (
+								<ul
+									style={{
+										position: 'absolute',
+										top: '100%',
+										left: 0,
+										zIndex: 10,
+										background: '#fff',
+										border: '1px solid #ddd',
+										minWidth: 220,
+										width: '100%',
+										maxWidth: 400,
+										maxHeight: 180,
+										overflowY: 'auto',
+										margin: 0,
+										padding: 0,
+										listStyle: 'none',
+										borderRadius: 4,
+										boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+									}}
+								>
+									{suggestions.map((s, i) => (
+										<li
+											key={i}
+											onClick={() => {
+												setInput(s);
+												setShowSuggestions(false);
+												setHighlighted(-1);
+												inputRef.current?.focus();
+											}}
+											style={{
+												padding: 8,
+												background: i === highlighted ? '#e6f0ff' : '#fff',
+												cursor: 'pointer',
+											}}
+										>
+											{s}
+										</li>
+									))}
+								</ul>
+							)}
+						</div>
 						<button
 							type='submit'
 							disabled={gameOver || !input.trim()}
-							style={{ padding: 8, fontSize: 16, marginLeft: 8 }}
+							style={{ padding: 8, fontSize: 16, marginLeft: 24 }}
 						>
 							Guess
-						</button>
-						<button
-							type='button'
-							onClick={startGame}
-							style={{ padding: 8, fontSize: 16, marginLeft: 8 }}
-						>
-							Restart
 						</button>
 					</form>
 					<div>
@@ -498,17 +496,64 @@ export default function Home() {
 									You got it in {guesses.length} tries!
 								</span>
 							) : (
-								<>
-									<span style={{ color: '#bb2222' }}>
-										Game over! The answer was <b>{target.countryName}</b>.
-									</span>
-									<ShowMapButton target={target} />
-								</>
+								<span style={{ color: '#bb2222' }}>
+									Game over! The answer was <b>{target.countryName}</b>.
+								</span>
 							)}
+							<ShowMapButton target={target} />
 						</div>
 					)}
 				</>
 			)}
+			<div
+				style={{
+					position: 'fixed',
+					bottom: 24,
+					right: 24,
+					display: 'flex',
+					gap: 12,
+					zIndex: 1000,
+				}}
+			>
+				<button
+					onClick={startGame}
+					style={{
+						padding: '14px 32px',
+						fontSize: 20,
+						background: '#0070f3',
+						color: '#fff',
+						border: 'none',
+						borderRadius: 8,
+						boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+						cursor: 'pointer',
+						fontWeight: 600,
+					}}
+					aria-label='Restart game'
+				>
+					Restart
+				</button>
+				<button
+					disabled={gameOver}
+					style={{
+						padding: '14px 32px',
+						fontSize: 20,
+						background: '#bb2222',
+						color: '#fff',
+						border: 'none',
+						borderRadius: 8,
+						boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+						cursor: gameOver ? 'not-allowed' : 'pointer',
+						fontWeight: 600,
+					}}
+					onClick={() => {
+						setGameOver(true);
+						setWin(false);
+					}}
+					aria-label='Show answer'
+				>
+					Show Answer
+				</button>
+			</div>
 		</main>
 	);
 }
