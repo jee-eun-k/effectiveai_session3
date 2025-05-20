@@ -1,559 +1,500 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
-import capitalsData from '../data/world-capitals.json';
 
-// Helper: Haversine formula to calculate distance between two lat/lon points (in km)
-function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-	const toRad = (d: number) => (d * Math.PI) / 180;
-	const R = 6371; // Radius of Earth in km
-	const dLat = toRad(lat2 - lat1);
-	const dLon = toRad(lon2 - lon1);
-	const a =
-		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-		Math.cos(toRad(lat1)) *
-			Math.cos(toRad(lat2)) *
-			Math.sin(dLon / 2) *
-			Math.sin(dLon / 2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	return Math.round(R * c);
-}
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/components/ui/table';
+import { cn } from '@/lib/utils';
 
-// Normalize strings for comparison
-function normalize(str: string) {
-	return str.trim().toLowerCase();
-}
-
-type Capital = (typeof capitalsData)[number];
-
-type Guess = {
-	guess: string;
-	distance: number | null;
-	correct: boolean;
+// Function to calculate distance between two points in kilometers using Haversine formula
+const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const R = 6371; // Radius of the Earth in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c);
 };
 
-function pickRandomCapital(): Capital {
-	// Only pick capitals with valid coordinates and country names
-	const valid = capitalsData.filter(
-		(c) => c.capital && c.countryName && c.latitude && c.longitude && c.capital !== 'N/A'
-	);
-	return valid[Math.floor(Math.random() * valid.length)];
-}
+// Coordinates for world capitals (add more as needed)
+const capitalCoordinates: { [key: string]: { lat: number; lon: number } } = {
+  'Afghanistan': { lat: 34.5553, lon: 69.2075 },
+  'Albania': { lat: 41.3275, lon: 19.8187 },
+  'Algeria': { lat: 36.7538, lon: 3.0588 },
+  'Angola': { lat: -8.8390, lon: 13.2894 },
+  'Antigua and Barbuda': { lat: 17.1175, lon: -61.8456 },
+  'Argentina': { lat: -34.6118, lon: -58.4173 },
+  'Armenia': { lat: 40.1792, lon: 44.4991 },
+  'Australia': { lat: -35.2820, lon: 149.1286 },
+  'Austria': { lat: 48.2082, lon: 16.3738 },
+  'Azerbaijan': { lat: 40.4093, lon: 49.8671 },
+  'Bahamas': { lat: 25.0478, lon: -77.3554 },
+  'Bahrain': { lat: 26.2235, lon: 50.5876 },
+  'Bangladesh': { lat: 23.8103, lon: 90.4125 },
+  'Barbados': { lat: 13.1132, lon: -59.5988 },
+  'Belarus': { lat: 53.9045, lon: 27.5615 },
+  'Belgium': { lat: 50.8503, lon: 4.3517 },
+  'Belize': { lat: 17.1899, lon: -88.4976 },
+  'Benin': { lat: 6.4969, lon: 2.6289 },
+  'Bhutan': { lat: 27.4728, lon: 89.6390 },
+  'Bolivia': { lat: -16.4897, lon: -68.1193 },
+  'Bosnia and Herzegovina': { lat: 43.8563, lon: 18.4131 },
+  'Botswana': { lat: -24.6282, lon: 25.9231 },
+  'Brazil': { lat: -15.8267, lon: -47.9218 },
+  'Brunei': { lat: 4.9031, lon: 114.9398 },
+  'Bulgaria': { lat: 42.6977, lon: 23.3219 },
+  'Burkina Faso': { lat: 12.3714, lon: -1.5197 },
+  'Burundi': { lat: -3.3614, lon: 29.3599 },
+  'Cabo Verde': { lat: 14.9330, lon: -23.5133 },
+  'Cambodia': { lat: 11.5564, lon: 104.9282 },
+  'Cameroon': { lat: 3.8480, lon: 11.5021 },
+  'Canada': { lat: 45.4215, lon: -75.6972 },
+  // Add more countries as needed
+};
 
-import famousFor from '../data/famous-for.json';
+const CapitalGuessingGame = () => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [capitals, _setCapitals] = useState<{ [capital: string]: string }>({
+		'Kabul': 'Afghanistan',
+		'Tirana': 'Albania',
+		'Algiers': 'Algeria',
+		'Luanda': 'Angola',
+		"Saint John's": 'Antigua and Barbuda',
+		'Buenos Aires': 'Argentina',
+		'Yerevan': 'Armenia',
+		'Canberra': 'Australia',
+		'Vienna': 'Austria',
+		'Baku': 'Azerbaijan',
+		'Nassau': 'Bahamas',
+		'Manama': 'Bahrain',
+		'Dhaka': 'Bangladesh',
+		'Bridgetown': 'Barbados',
+		'Minsk': 'Belarus',
+		'Brussels': 'Belgium',
+		'Belmopan': 'Belize',
+		'Porto-Novo': 'Benin',
+		'Thimphu': 'Bhutan',
+		'Sucre': 'Bolivia',
+		'Sarajevo': 'Bosnia and Herzegovina',
+		'Gaborone': 'Botswana',
+		'Bras\u00edlia': 'Brazil',
+		'Bandar Seri Begawan': 'Brunei',
+		'Sofia': 'Bulgaria',
+		'Ouagadougou': 'Burkina Faso',
+		'Gitega': 'Burundi',
+		'Praia': 'Cabo Verde',
+		'Phnom Penh': 'Cambodia',
+		'Yaound\u00e9': 'Cameroon',
+		'Ottawa': 'Canada',
+		'Bangui': 'Central African Republic',
+		"N'Djamena": 'Chad',
+		'Santiago': 'Chile',
+		'Beijing': 'China',
+		'Bogot\u00e1': 'Colombia',
+		'Moroni': 'Comoros',
+		'Brazzaville': 'Congo, Republic of the',
+		'Kinshasa': 'Congo, Democratic Republic of the',
+		'San Jos\u00e9': 'Costa Rica',
+		'Yamoussoukro': "C\u00f4te d'Ivoire",
+		'Zagreb': 'Croatia',
+		'Havana': 'Cuba',
+		'Nicosia': 'Cyprus',
+		'Prague': 'Czech Republic',
+		'Copenhagen': 'Denmark',
+		'Djibouti City': 'Djibouti',
+		'Roseau': 'Dominica',
+		'Santo Domingo': 'Dominican Republic',
+		'Dili': 'East Timor',
+		'Quito': 'Ecuador',
+		'Cairo': 'Egypt',
+		'San Salvador': 'El Salvador',
+		'Malabo': 'Equatorial Guinea',
+		'Asmara': 'Eritrea',
+		'Tallinn': 'Estonia',
+		'Mbabane': 'Eswatini',
+		'Addis Ababa': 'Ethiopia',
+		'Suva': 'Fiji',
+		'Helsinki': 'Finland',
+		'Paris': 'France',
+		'Libreville': 'Gabon',
+		'Banjul': 'Gambia',
+		'Tbilisi': 'Georgia',
+		'Berlin': 'Germany',
+		'Accra': 'Ghana',
+		'Athens': 'Greece',
+		"Saint George's": 'Grenada',
+		'Guatemala City': 'Guatemala',
+		'Conakry': 'Guinea',
+		'Bissau': 'Guinea-Bissau',
+		'Georgetown': 'Guyana',
+		'Port-au-Prince': 'Haiti',
+		'Tegucigalpa': 'Honduras',
+		'Budapest': 'Hungary',
+		'Reykjavik': 'Iceland',
+		'New Delhi': 'India',
+		'Jakarta': 'Indonesia',
+		'Tehran': 'Iran',
+		'Baghdad': 'Iraq',
+		'Dublin': 'Ireland',
+		'Jerusalem': 'Israel',
+		'Rome': 'Italy',
+		'Kingston': 'Jamaica',
+		'Tokyo': 'Japan',
+		'Amman': 'Jordan',
+		'Astana': 'Kazakhstan',
+		'Nairobi': 'Kenya',
+		'South Tarawa': 'Kiribati',
+		'Pyongyang': 'North Korea',
+		'Seoul': 'South Korea',
+		'Kuwait City': 'Kuwait',
+		'Bishkek': 'Kyrgyzstan',
+		'Vientiane': 'Laos',
+		'Beirut': 'Lebanon',
+		'Maseru': 'Lesotho',
+		'Monrovia': 'Liberia',
+		'Tripoli': 'Libya',
+		'Vaduz': 'Liechtenstein',
+		'Vilnius': 'Lithuania',
+		'Luxembourg City': 'Luxembourg',
+		'Antananarivo': 'Madagascar',
+		'Lilongwe': 'Malawi',
+		'Kuala Lumpur': 'Malaysia',
+		'Male': 'Maldives',
+		'Bamako': 'Mali',
+		'Valletta': 'Malta',
+		'Majuro': 'Marshall Islands',
+		'Nouakchott': 'Mauritania',
+		'Port Louis': 'Mauritius',
+		'Mexico City': 'Mexico',
+		'Palikir': 'Micronesia',
+		'Chisinau': 'Moldova',
+		'Monaco': 'Monaco',
+		'Ulaanbaatar': 'Mongolia',
+		'Podgorica': 'Montenegro',
+		'Rabat': 'Morocco',
+		'Maputo': 'Mozambique',
+		'Naypyidaw': 'Myanmar',
+		'Windhoek': 'Namibia',
+		'Yaren District': 'Nauru',
+		'Kathmandu': 'Nepal',
+		'Amsterdam': 'Netherlands',
+		'Wellington': 'New Zealand',
+		'Managua': 'Nicaragua',
+		'Niamey': 'Niger',
+		'Abuja': 'Nigeria',
+		'Oslo': 'Norway',
+		'Muscat': 'Oman',
+		'Islamabad': 'Pakistan',
+		'Ngerulmud': 'Palau',
+		'Panama City': 'Panama',
+		'Port Moresby': 'Papua New Guinea',
+		'Asunci\u00f3n': 'Paraguay',
+		'Lima': 'Peru',
+		'Manila': 'Philippines',
+		'Warsaw': 'Poland',
+		'Lisbon': 'Portugal',
+		'Doha': 'Qatar',
+		'Bucharest': 'Romania',
+		'Moscow': 'Russia',
+		'Kigali': 'Rwanda',
+		'Basseterre': 'Saint Kitts and Nevis',
+		'Castries': 'Saint Lucia',
+		'Kingstown': 'Saint Vincent and the Grenadines',
+		'Apia': 'Samoa',
+		'San Marino': 'San Marino',
+		'Sao Tome': 'Sao Tome and Principe',
+		'Riyadh': 'Saudi Arabia',
+		'Dakar': 'Senegal',
+		'Belgrade': 'Serbia',
+		'Victoria': 'Seychelles',
+		'Freetown': 'Sierra Leone',
+		'Singapore': 'Singapore',
+		'Bratislava': 'Slovakia',
+		'Ljubljana': 'Slovenia',
+		'Honiara': 'Solomon Islands',
+		'Mogadishu': 'Somalia',
+		'Pretoria': 'South Africa',
+		'Juba': 'South Sudan',
+		'Madrid': 'Spain',
+		'Sri Jayawardenepura Kotte': 'Sri Lanka',
+		'Khartoum': 'Sudan',
+		'Paramaribo': 'Suriname',
+		'Stockholm': 'Sweden',
+		'Bern': 'Switzerland',
+		'Damascus': 'Syria',
+		'Taipei': 'Taiwan',
+		'Dushanbe': 'Tajikistan',
+		'Dodoma': 'Tanzania',
+		'Bangkok': 'Thailand',
+		'Lom\u00e9': 'Togo',
+		"Nuku'alofa": 'Tonga',
+		'Port of Spain': 'Trinidad and Tobago',
+		'Tunis': 'Tunisia',
+		'Ankara': 'Turkey',
+		'Ashgabat': 'Turkmenistan',
+		'Funafuti': 'Tuvalu',
+		'Kampala': 'Uganda',
+		'Kyiv': 'Ukraine',
+		'Abu Dhabi': 'United Arab Emirates',
+		'London': 'United Kingdom',
+		'Washington, D.C.': 'United States',
+		'Montevideo': 'Uruguay',
+		'Tashkent': 'Uzbekistan',
+		'Port Vila': 'Vanuatu',
+		'Vatican City': 'Vatican City',
+		'Caracas': 'Venezuela',
+		'Hanoi': 'Vietnam',
+		"Sana'a": 'Yemen',
+		'Lusaka': 'Zambia',
+		'Harare': 'Zimbabwe',
+	});
 
-function getCountryFamousFor(country: string): string {
-	return (
-		(famousFor as Record<string, string>)[country] ||
-		'Famous landmarks, food, culture, and history.'
-	);
-}
-
-function ShowMapButton({ target }: { target: Capital }) {
-	const [show, setShow] = useState(false);
-	if (!target) return null;
-	const lat = target.latitude ? parseFloat(target.latitude) : 0;
-	const lon = target.longitude ? parseFloat(target.longitude) : 0;
-	const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 1}%2C${
-		lat - 1
-	}%2C${lon + 1}%2C${lat + 1}&layer=mapnik&marker=${lat}%2C${lon}`;
-	return (
-		<div style={{ marginTop: 18 }}>
-			{!show ? (
-				<button
-					onClick={() => setShow(true)}
-					style={{
-						marginTop: 12,
-						padding: '8px 16px',
-						fontSize: 16,
-						background: '#fff',
-						border: '1.5px solid #bb2222',
-						color: '#bb2222',
-						borderRadius: 6,
-						cursor: 'pointer',
-						fontWeight: 500,
-						display: 'flex',
-						alignItems: 'center',
-						gap: 8,
-					}}
-				>
-					<svg
-						width='18'
-						height='18'
-						viewBox='0 0 24 24'
-						fill='none'
-						stroke='#bb2222'
-						strokeWidth='2'
-						strokeLinecap='round'
-						strokeLinejoin='round'
-					>
-						<path d='M12 2v20M12 22l-4-4m4 4l4-4' />
-					</svg>
-					Show Answer on Map
-				</button>
-			) : (
-				<div style={{ marginTop: 12 }}>
-					<div style={{ fontSize: 16, marginBottom: 8 }}>
-						<b>{target.capital}</b> is in <b>{target.countryName}</b>
-					</div>
-					<div
-						style={{
-							border: '2px solid #bb2222',
-							borderRadius: 8,
-							overflow: 'hidden',
-							maxWidth: 400,
-						}}
-					>
-						<iframe
-							title='Map'
-							width='100%'
-							height='260'
-							src={mapUrl}
-							style={{ border: 'none', display: 'block' }}
-							loading='lazy'
-						></iframe>
-					</div>
-					<div style={{ fontSize: 13, color: '#888', marginTop: 4 }}>
-						<a
-							href={`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=6/${lat}/${lon}`}
-							target='_blank'
-							rel='noopener noreferrer'
-						>
-							View interactive map ↗
-						</a>
-					</div>
-				</div>
-			)}
-		</div>
-	);
-}
-
-export default function Home() {
-	// --- Autocomplete state ---
-	const [suggestions, setSuggestions] = useState<string[]>([]);
-	const [showSuggestions, setShowSuggestions] = useState(false);
-	const [highlighted, setHighlighted] = useState(-1);
-
-	// List of all country names for autocomplete
-	const countryNames = React.useMemo(
-		() => capitalsData.map((c) => c.countryName).sort(),
-		[]
-	);
-
-	const [target, setTarget] = useState<Capital | null>(null);
-	const [guesses, setGuesses] = useState<Guess[]>([]);
-	const [input, setInput] = useState('');
-	const [gameOver, setGameOver] = useState(false);
-	const [win, setWin] = useState(false);
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	// Build a map for fast lookup
-	const countryMap = React.useMemo(() => {
-		const map = new Map<string, Capital>();
-		capitalsData.forEach((c) => {
-			map.set(normalize(c.countryName), c);
-		});
-		return map;
-	}, []);
-
-	// Start or restart the game
-	const startGame = () => {
-		setTarget(pickRandomCapital());
-		setGuesses([]);
-		setInput('');
-		setGameOver(false);
-		setWin(false);
-		setTimeout(() => inputRef.current?.focus(), 100);
-	};
+	const [remainingGuesses, setRemainingGuesses] = useState(5);
+	const [currentCapital, setCurrentCapital] = useState('');
+	const [countryName, setCountryName] = useState('');
+	const [guessedCountries, setGuessedCountries] = useState<
+		{ country: string; distance: number }[]
+	>([]);
+	const [gameActive, setGameActive] = useState(true);
+	const [userGuess, setUserGuess] = useState('');
+	const [message, setMessage] = useState('');
+	const [autocompleteList, setAutocompleteList] = useState<string[]>([]);
+	const [showAutocomplete, setShowAutocomplete] = useState(false);
 
 	useEffect(() => {
 		startGame();
-		// eslint-disable-next-line
 	}, []);
 
-	// Update suggestions as user types
-	useEffect(() => {
-		if (input.trim()) {
-			const val = normalize(input);
-			setSuggestions(
-				countryNames.filter((name) => normalize(name).includes(val)).slice(0, 10)
-			);
-		} else {
-			setSuggestions([]);
-		}
-	}, [input, countryNames]);
+	const startGame = () => {
+		const capitalKeys = Object.keys(capitals);
+		const randomCapital = capitalKeys[Math.floor(Math.random() * capitalKeys.length)];
+		setCurrentCapital(randomCapital);
+		setCountryName(capitals[randomCapital]);
+		setRemainingGuesses(5);
+		setGuessedCountries([]);
+		setGameActive(true);
+		setUserGuess('');
+		setMessage('');
+		setShowAutocomplete(false);
+	};
 
-	const handleGuess = (e: React.FormEvent) => {
-		e.preventDefault();
-		if (!target || gameOver) return;
-		const userGuess = input.trim();
-		if (!userGuess) return;
-		const guessNorm = normalize(userGuess);
-		const correctNorm = normalize(target.countryName);
-		let correct = false;
-		let distance = null;
-		if (guessNorm === correctNorm) {
-			correct = true;
-			distance = 0;
-		} else if (countryMap.has(guessNorm)) {
-			const guessedCountry = countryMap.get(guessNorm)!;
-			distance = getDistanceKm(
-				parseFloat(target.latitude),
-				target.longitude ? parseFloat(target.longitude) : 0,
-				parseFloat(guessedCountry.latitude),
-				guessedCountry.longitude ? parseFloat(guessedCountry.longitude) : 0
-			);
+	const getGeographicalDistance = (guess: string, correctCountry: string): number => {
+		const guessCoords = capitalCoordinates[guess];
+		const correctCoords = capitalCoordinates[correctCountry];
+
+		if (!guessCoords || !correctCoords) {
+			// If we don't have coordinates for either country, return a large number
+			return 99999;
 		}
-		const newGuess: Guess = { guess: userGuess, distance, correct };
-		const updatedGuesses = [...guesses, newGuess];
-		setGuesses(updatedGuesses);
-		setInput('');
-		setShowSuggestions(false);
-		setHighlighted(-1);
-		if (correct) {
-			setWin(true);
-			setGameOver(true);
-		} else if (updatedGuesses.length >= 5) {
-			setGameOver(true);
+
+		return calculateDistance(
+			guessCoords.lat,
+			guessCoords.lon,
+			correctCoords.lat,
+			correctCoords.lon
+		);
+	};
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const displayMessage = (msg: string, _color: 'red' | 'green' = 'red') => {
+		setMessage(msg);
+	};
+
+	const updateResultsTable = () => {
+		// Results table is updated in the component's JSX rendering
+	};
+
+	const endGame = (isWin = false) => {
+		setGameActive(false);
+		if (isWin) {
+			displayMessage('Congratulations! You guessed it!', 'green');
+		} else {
+			displayMessage(`Game over! The correct answer was ${countryName}.`);
 		}
-		setTimeout(() => inputRef.current?.focus(), 100);
+	};
+
+	const checkAnswer = () => {
+		if (!gameActive) return;
+
+		const trimmedGuess = userGuess.trim();
+
+		if (!trimmedGuess) {
+			displayMessage('Please enter your guess.');
+			return;
+		}
+
+		const distance = getGeographicalDistance(trimmedGuess, countryName);
+		setGuessedCountries((prev) => [...prev, { country: trimmedGuess, distance }]);
+		updateResultsTable();
+
+		if (trimmedGuess.toLowerCase() === countryName.toLowerCase()) {
+			endGame(true);
+			return;
+		}
+
+		setRemainingGuesses((prev) => prev - 1);
+
+		if (remainingGuesses - 1 === 0) {
+			endGame();
+		} else {
+			displayMessage('Incorrect guess. Try again.');
+		}
+		setUserGuess('');
+		setShowAutocomplete(false);
+	};
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const input = e.target.value.toLowerCase();
+		setUserGuess(e.target.value);
+		if (!input) {
+			setAutocompleteList([]);
+			setShowAutocomplete(false);
+			return;
+		}
+
+		const suggestions = Object.entries(capitals)
+			.filter(
+				([capital, country]) =>
+					country.toLowerCase().startsWith(input) ||
+					capital.toLowerCase().startsWith(input)
+			)
+			.map(([, country]) => country);
+		setAutocompleteList(suggestions);
+		setShowAutocomplete(suggestions.length > 0);
+	};
+
+	const handleSuggestionClick = (suggestion: string) => {
+		setUserGuess(suggestion);
+		setAutocompleteList([]);
+		setShowAutocomplete(false);
 	};
 
 	return (
-		<main
-			style={{
-				maxWidth: 500,
-				margin: '40px auto',
-				padding: 24,
-				fontFamily: 'sans-serif',
-			}}
-		>
-			<h1>Capital Game</h1>
-			{target && (
-				<>
-					<p style={{ fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
-						What country has the capital city{' '}
-						<b style={{ color: '#0070f3' }}>{target.capital}</b>?
-						{/* Hint1 button with tooltip */}
-						<span style={{ position: 'relative', display: 'inline-block' }}>
-							{/* Hint1: Continent */}
-							<button
-								type='button'
-								aria-label='Show continent hint'
-								style={{
-									background: 'none',
-									border: 'none',
-									cursor: 'pointer',
-									padding: 0,
-									display: 'inline-flex',
-									alignItems: 'center',
-								}}
-								onMouseEnter={(e) => {
-									const tooltip = e.currentTarget.nextSibling as HTMLElement;
-									if (tooltip) tooltip.style.opacity = '1';
-								}}
-								onMouseLeave={(e) => {
-									const tooltip = e.currentTarget.nextSibling as HTMLElement;
-									if (tooltip) tooltip.style.opacity = '0';
-								}}
-							>
-								<svg
-									width='18'
-									height='18'
-									viewBox='0 0 20 20'
-									fill='none'
-									xmlns='http://www.w3.org/2000/svg'
-								>
-									<circle
-										cx='10'
-										cy='10'
-										r='10'
-										fill='#f3f3f3'
-										stroke='#0070f3'
-										strokeWidth='1.5'
-									/>
-									<text
-										x='10'
-										y='14'
-										textAnchor='middle'
-										fontSize='12'
-										fill='#0070f3'
-										fontWeight='bold'
-									>
-										?
-									</text>
-								</svg>
-							</button>
-							<span
-								style={{
-									position: 'absolute',
-									bottom: '-2.2em',
-									left: '50%',
-									transform: 'translateX(-50%)',
-									background: '#222',
-									color: '#fff',
-									padding: '6px 12px',
-									borderRadius: 6,
-									fontSize: 13,
-									whiteSpace: 'nowrap',
-									pointerEvents: 'none',
-									opacity: 0,
-									transition: 'opacity 0.18s',
-									zIndex: 20,
-								}}
-							>
-								Continent: <b>{target.continentName}</b>
-							</span>
-						</span>
-						{/* Hint2: Famous for */}
-						<span
-							style={{ position: 'relative', display: 'inline-block', marginLeft: 4 }}
-						>
-							<button
-								type='button'
-								aria-label='Show famous for hint'
-								style={{
-									background: 'none',
-									border: 'none',
-									cursor: 'pointer',
-									padding: 0,
-									display: 'inline-flex',
-									alignItems: 'center',
-								}}
-								onMouseEnter={(e) => {
-									const tooltip = e.currentTarget.nextSibling as HTMLElement;
-									if (tooltip) tooltip.style.opacity = '1';
-								}}
-								onMouseLeave={(e) => {
-									const tooltip = e.currentTarget.nextSibling as HTMLElement;
-									if (tooltip) tooltip.style.opacity = '0';
-								}}
-							>
-								<svg
-									width='18'
-									height='18'
-									viewBox='0 0 20 20'
-									fill='none'
-									xmlns='http://www.w3.org/2000/svg'
-								>
-									<circle
-										cx='10'
-										cy='10'
-										r='10'
-										fill='#f3f3f3'
-										stroke='#0070f3'
-										strokeWidth='1.5'
-									/>
-									<text
-										x='10'
-										y='14'
-										textAnchor='middle'
-										fontSize='12'
-										fill='#0070f3'
-										fontWeight='bold'
-									>
-										?
-									</text>
-								</svg>
-							</button>
-							<span
-								style={{
-									position: 'absolute',
-									bottom: '-2.2em',
-									left: '50%',
-									transform: 'translateX(-50%)',
-									background: '#222',
-									color: '#fff',
-									padding: '6px 12px',
-									borderRadius: 6,
-									fontSize: 13,
-									whiteSpace: 'nowrap',
-									pointerEvents: 'none',
-									opacity: 0,
-									transition: 'opacity 0.18s',
-									zIndex: 20,
-								}}
-							>
-								{getCountryFamousFor(target.countryName)}
-							</span>
+		<div className='bg-gray-100 flex justify-center items-center min-h-screen font-inter'>
+			<div className='bg-white rounded-lg shadow-md p-8 w-full max-w-md'>
+				<h1 className='text-2xl font-semibold text-blue-600 mb-4 text-center'>
+					Guess the Country
+				</h1>
+				<div className='mb-4'>
+					<p className='text-gray-700'>
+						Capital:{' '}
+						<span className='font-semibold' id='capital-name'>
+							{currentCapital}
 						</span>
 					</p>
-					<form
-						onSubmit={handleGuess}
-						style={{ marginBottom: 20, display: 'flex', alignItems: 'center' }}
+					<p className='text-sm text-gray-500 mt-1'>
+						You have{' '}
+						<span className='font-semibold' id='remaining-guesses'>
+							{remainingGuesses}
+						</span>{' '}
+						guesses left.
+					</p>
+				</div>
+				<div className='mb-4 relative'>
+					<Input
+						type='text'
+						id='user-answer'
+						placeholder='Enter your guess'
+						className={cn(
+							'w-full px-4 py-2 rounded-md border',
+							gameActive
+								? 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+								: message.startsWith('Congratulations')
+								? 'border-green-500 focus:ring-green-500'
+								: 'border-red-500 focus:ring-red-500'
+						)}
 						autoComplete='off'
-					>
-						<div style={{ position: 'relative', width: '70%' }}>
-							<input
-								ref={inputRef}
-								type='text'
-								value={input}
-								onChange={(e) => {
-									setInput(e.target.value);
-									setHighlighted(-1);
-									e.preventDefault();
-								}}
-								placeholder='Type country name...'
-								disabled={gameOver}
-								style={{ padding: 8, fontSize: 16, width: '100%' }}
-								autoComplete='off'
-								onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-								onFocus={() => setShowSuggestions(true)}
-								onKeyDown={(e) => {
-									if (!suggestions.length) return;
-									if (e.key === 'ArrowDown') {
-										setHighlighted((h) => Math.min(h + 1, suggestions.length - 1));
-									} else if (e.key === 'ArrowUp') {
-										setHighlighted((h) => Math.max(h - 1, 0));
-									} else if (e.key === 'Enter') {
-										if (highlighted >= 0 && suggestions[highlighted]) {
-											setInput(suggestions[highlighted]);
-											setShowSuggestions(false);
-											setHighlighted(-1);
-											e.preventDefault();
-										}
-									}
-								}}
-							/>
-							{showSuggestions && suggestions.length > 0 && (
-								<ul
-									style={{
-										position: 'absolute',
-										top: '100%',
-										left: 0,
-										zIndex: 10,
-										background: '#fff',
-										border: '1px solid #ddd',
-										minWidth: 220,
-										width: '100%',
-										maxWidth: 400,
-										maxHeight: 180,
-										overflowY: 'auto',
-										margin: 0,
-										padding: 0,
-										listStyle: 'none',
-										borderRadius: 4,
-										boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-									}}
-								>
-									{suggestions.map((s, i) => (
-										<li
-											key={i}
-											onClick={() => {
-												setInput(s);
-												setShowSuggestions(false);
-												setHighlighted(-1);
-												inputRef.current?.focus();
-											}}
-											style={{
-												padding: 8,
-												background: i === highlighted ? '#e6f0ff' : '#fff',
-												cursor: 'pointer',
-											}}
-										>
-											{s}
-										</li>
-									))}
-								</ul>
-							)}
-						</div>
-						<button
-							type='submit'
-							disabled={gameOver || !input.trim()}
-							style={{ padding: 8, fontSize: 16, marginLeft: 24 }}
+						value={userGuess}
+						onChange={handleInputChange}
+					/>
+					{showAutocomplete && (
+						<ul
+							id='autocomplete-list'
+							className='absolute z-10 bg-white border border-gray-300 rounded-md shadow-lg mt-1 w-full max-h-52 overflow-y-auto'
 						>
-							Guess
-						</button>
-					</form>
-					<div>
-						<h3>Guesses ({guesses.length}/5):</h3>
-						<ul style={{ padding: 0, listStyle: 'none' }}>
-							{guesses.map((g, i) => (
+							{autocompleteList.map((suggestion, index) => (
 								<li
-									key={i}
-									style={{
-										marginBottom: 6,
-										background: g.correct ? '#d2ffd2' : '#f3f3f3',
-										padding: 8,
-										borderRadius: 6,
-									}}
+									key={index}
+									className='px-4 py-2 cursor-pointer hover:bg-gray-100'
+									onClick={() => handleSuggestionClick(suggestion)}
 								>
-									<b>{g.guess}</b>
-									{g.correct ? (
-										<span style={{ color: 'green', marginLeft: 8 }}>🎉 Correct!</span>
-									) : g.distance !== null ? (
-										<span style={{ marginLeft: 8 }}>{g.distance} km away</span>
-									) : (
-										<span style={{ color: '#bb2222', marginLeft: 8 }}>Not found</span>
-									)}
+									{suggestion}
 								</li>
 							))}
 						</ul>
-					</div>
-					{gameOver && (
-						<div style={{ marginTop: 18, fontSize: 18 }}>
-							{win ? (
-								<span style={{ color: 'green' }}>
-									You got it in {guesses.length} tries!
-								</span>
-							) : (
-								<span style={{ color: '#bb2222' }}>
-									Game over! The answer was <b>{target.countryName}</b>.
-								</span>
-							)}
-							<ShowMapButton target={target} />
-						</div>
 					)}
-				</>
-			)}
-			<div
-				style={{
-					position: 'fixed',
-					bottom: 24,
-					right: 24,
-					display: 'flex',
-					gap: 12,
-					zIndex: 1000,
-				}}
-			>
-				<button
-					onClick={startGame}
-					style={{
-						padding: '14px 32px',
-						fontSize: 20,
-						background: '#0070f3',
-						color: '#fff',
-						border: 'none',
-						borderRadius: 8,
-						boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
-						cursor: 'pointer',
-						fontWeight: 600,
-					}}
-					aria-label='Restart game'
-				>
-					Restart
-				</button>
-				<button
-					disabled={gameOver}
-					style={{
-						padding: '14px 32px',
-						fontSize: 20,
-						background: '#bb2222',
-						color: '#fff',
-						border: 'none',
-						borderRadius: 8,
-						boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
-						cursor: gameOver ? 'not-allowed' : 'pointer',
-						fontWeight: 600,
-					}}
-					onClick={() => {
-						setGameOver(true);
-						setWin(false);
-					}}
-					aria-label='Show answer'
-				>
-					Show Answer
-				</button>
+				</div>
+				<div className='mb-4'>
+					<Table
+						id='results-table'
+						className={cn(
+							'min-w-full table-auto rounded-md',
+							guessedCountries.length === 0 && 'hidden'
+						)}
+					>
+						<TableHeader className='bg-gray-200'>
+							<TableRow>
+								<TableHead className='px-4 py-2 text-left'>Your Guess</TableHead>
+								<TableHead className='px-4 py-2 text-left'>Distance</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody className='text-gray-700'>
+							{guessedCountries.map((guess, index) => (
+								<TableRow key={index}>
+									<TableCell className='px-4 py-2'>{guess.country}</TableCell>
+									<TableCell className='px-4 py-2'>{guess.distance}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</div>
+				<div className='mb-4 text-red-500' id='message'>
+					{message}
+				</div>
+				<div className='game-controls flex justify-center space-x-4 mt-6'>
+					<Button
+						id='check-answer'
+						className={cn(
+							'bg-green-500 hover:bg-green-700 text-white font-semibold rounded-md py-2 px-4 focus:outline-none focus:shadow-outline',
+							!gameActive && 'bg-gray-400 cursor-not-allowed'
+						)}
+						onClick={checkAnswer}
+						disabled={!gameActive}
+					>
+						Check Answer
+					</Button>
+					<Button
+						id='show-answer'
+						className='bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md py-2 px-4 focus:outline-none focus:shadow-outline'
+						onClick={() => {
+							displayMessage(`The answer is ${countryName}.`);
+							setUserGuess(countryName);
+							endGame();
+						}}
+					>
+						Show Answer
+					</Button>
+					<Button
+						id='restart-game'
+						className='bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-semibold rounded-md py-2 px-4 focus:outline-none focus:shadow-outline'
+						onClick={startGame}
+					>
+						Restart Game
+					</Button>
+				</div>
 			</div>
-		</main>
+		</div>
 	);
-}
+};
+
+export default CapitalGuessingGame;
