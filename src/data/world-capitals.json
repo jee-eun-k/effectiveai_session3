@@ -163,9 +163,111 @@
 		"countryName": "Bahrain",
 		"capital": "Manama",
 		"latitude": "26.233333333333334",
-		"countryCode2": "VG",
+		"longitude": "50.566667",
+		"countryCode2": "BH",
+		"continentName": "Asia",
+		"countryCode3": "BHR",
+		"famousFor": "Banking hub, oil wealth, and Formula 1 racing."
+	},
+	{
+		"countryName": "Bangladesh",
+		"capital": "Dhaka",
+		"latitude": "23.810333",
+		"longitude": "90.412518",
+		"countryCode2": "BD",
+		"continentName": "Asia",
+		"countryCode3": "BGD",
+		"famousFor": "Bengal tigers, rivers, and textiles."
+	},
+	{
+		"countryName": "Barbados",
+		"capital": "Bridgetown",
+		"latitude": "13.113222",
+		"longitude": "-59.598809",
+		"countryCode2": "BB",
 		"continentName": "North America",
-		"countryCode3": "VGB"
+		"countryCode3": "BRB",
+		"famousFor": "Rum, cricket, and beautiful beaches."
+	},
+	{
+		"countryName": "Belarus",
+		"capital": "Minsk",
+		"latitude": "53.904541",
+		"longitude": "27.561524",
+		"countryCode2": "BY",
+		"continentName": "Europe",
+		"countryCode3": "BLR",
+		"famousFor": "Soviet architecture, forests, and potatoes."
+	},
+	{
+		"countryName": "Belgium",
+		"capital": "Brussels",
+		"latitude": "50.850346",
+		"longitude": "4.351721",
+		"countryCode2": "BE",
+		"continentName": "Europe",
+		"countryCode3": "BEL",
+		"famousFor": "Chocolate, waffles, and EU headquarters."
+	},
+	{
+		"countryName": "Belize",
+		"capital": "Belmopan",
+		"latitude": "17.189877",
+		"longitude": "-88.49765",
+		"countryCode2": "BZ",
+		"continentName": "North America",
+		"countryCode3": "BLZ",
+		"famousFor": "Barrier reef, Mayan ruins, and English-speaking Central America."
+	},
+	{
+		"countryName": "Benin",
+		"capital": "Porto-Novo",
+		"latitude": "6.496857",
+		"longitude": "2.628852",
+		"countryCode2": "BJ",
+		"continentName": "Africa",
+		"countryCode3": "BEN",
+		"famousFor": "Voodoo origins, colonial architecture, and bronze casting."
+	},
+	{
+		"countryName": "Bhutan",
+		"capital": "Thimphu",
+		"latitude": "27.472792",
+		"longitude": "89.639286",
+		"countryCode2": "BT",
+		"continentName": "Asia",
+		"countryCode3": "BTN",
+		"famousFor": "Gross National Happiness, monasteries, and carbon-negative country."
+	},
+	{
+		"countryName": "Bosnia and Herzegovina",
+		"capital": "Sarajevo",
+		"latitude": "43.856259",
+		"longitude": "18.413076",
+		"countryCode2": "BA",
+		"continentName": "Europe",
+		"countryCode3": "BIH",
+		"famousFor": "1984 Olympics, Ottoman architecture, and coffee culture."
+	},
+	{
+		"countryName": "Botswana",
+		"capital": "Gaborone",
+		"latitude": "-24.628208",
+		"longitude": "25.923147",
+		"countryCode2": "BW",
+		"continentName": "Africa",
+		"countryCode3": "BWA",
+		"famousFor": "Kalahari Desert, diamonds, and wildlife safaris."
+	},
+	{
+		"countryName": "Brazil",
+		"capital": "Brasília",
+		"latitude": "-15.826691",
+		"longitude": "-47.921822",
+		"countryCode2": "BR",
+		"continentName": "South America",
+		"countryCode3": "BRA",
+		"famousFor": "Amazon rainforest, carnival, and soccer."
 	},
 	{
 		"countryName": "Brunei Darussalam",
@@ -175,6 +277,16 @@
 		"countryCode2": "BN",
 		"continentName": "Asia",
 		"countryCode3": "BRN"
+	},
+	{
+		"countryName": "Bolivia",
+		"capital": "Sucre",
+		"latitude": "-19.033333",
+		"longitude": "-65.25",
+		"countryCode2": "BO",
+		"continentName": "South America",
+		"countryCode3": "BOL",
+		"famousFor": "Salar de Uyuni, Andes, and indigenous cultures."
 	},
 	{
 		"countryName": "Bulgaria",
@@ -1244,7 +1356,18 @@
 		"longitude": "17.083333",
 		"countryCode2": "NA",
 		"continentName": "Africa",
-		"countryCode3": "NAM"
+		"countryCode3": "NAM",
+		"famousFor": "Namib Desert, diamonds, and wildlife."
+	},
+	{
+		"countryName": "Nauru",
+		"capital": "Yaren District",
+		"latitude": "-0.522778",
+		"longitude": "166.931503",
+		"countryCode2": "NR",
+		"continentName": "Australia",
+		"countryCode3": "NRU",
+		"famousFor": "Phosphate mining, world's smallest island nation, and obesity rates."
 	},
 	{
 		"countryName": "Nepal",

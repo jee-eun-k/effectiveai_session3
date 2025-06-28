@@ -12,6 +12,18 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
+import worldCapitalsData from '@/data/world-capitals.json';
+
+type CountryData = {
+	countryName: string;
+	capital: string;
+	latitude: string;
+	longitude: string;
+	countryCode2: string;
+	continentName: string;
+	countryCode3: string;
+	famousFor: string;
+};
 
 // Function to calculate distance between two points in kilometers using Haversine formula
 const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -26,41 +38,28 @@ const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: numbe
   return Math.round(R * c);
 };
 
-// Coordinates for world capitals (add more as needed)
-const capitalCoordinates: { [key: string]: { lat: number; lon: number } } = {
-  'Afghanistan': { lat: 34.5553, lon: 69.2075 },
-  'Albania': { lat: 41.3275, lon: 19.8187 },
-  'Algeria': { lat: 36.7538, lon: 3.0588 },
-  'Angola': { lat: -8.8390, lon: 13.2894 },
-  'Antigua and Barbuda': { lat: 17.1175, lon: -61.8456 },
-  'Argentina': { lat: -34.6118, lon: -58.4173 },
-  'Armenia': { lat: 40.1792, lon: 44.4991 },
-  'Australia': { lat: -35.2820, lon: 149.1286 },
-  'Austria': { lat: 48.2082, lon: 16.3738 },
-  'Azerbaijan': { lat: 40.4093, lon: 49.8671 },
-  'Bahamas': { lat: 25.0478, lon: -77.3554 },
-  'Bahrain': { lat: 26.2235, lon: 50.5876 },
-  'Bangladesh': { lat: 23.8103, lon: 90.4125 },
-  'Barbados': { lat: 13.1132, lon: -59.5988 },
-  'Belarus': { lat: 53.9045, lon: 27.5615 },
-  'Belgium': { lat: 50.8503, lon: 4.3517 },
-  'Belize': { lat: 17.1899, lon: -88.4976 },
-  'Benin': { lat: 6.4969, lon: 2.6289 },
-  'Bhutan': { lat: 27.4728, lon: 89.6390 },
-  'Bolivia': { lat: -16.4897, lon: -68.1193 },
-  'Bosnia and Herzegovina': { lat: 43.8563, lon: 18.4131 },
-  'Botswana': { lat: -24.6282, lon: 25.9231 },
-  'Brazil': { lat: -15.8267, lon: -47.9218 },
-  'Brunei': { lat: 4.9031, lon: 114.9398 },
-  'Bulgaria': { lat: 42.6977, lon: 23.3219 },
-  'Burkina Faso': { lat: 12.3714, lon: -1.5197 },
-  'Burundi': { lat: -3.3614, lon: 29.3599 },
-  'Cabo Verde': { lat: 14.9330, lon: -23.5133 },
-  'Cambodia': { lat: 11.5564, lon: 104.9282 },
-  'Cameroon': { lat: 3.8480, lon: 11.5021 },
-  'Canada': { lat: 45.4215, lon: -75.6972 },
-  // Add more countries as needed
+// Create a mapping for countries with different names between hardcoded and JSON data
+const countryNameMapping: { [key: string]: string } = {
+	'Brunei': 'Brunei Darussalam',
+	'Gambia': 'The Gambia',
+	'Micronesia': 'Federated States of Micronesia',
+	'United States': 'United States of America',
+	'Cabo Verde': 'Cape Verde',
+	'Congo, Republic of the': 'Republic of Congo',
+	'Congo, Democratic Republic of the': 'Democratic Republic of the Congo',
+	'Côte d\'Ivoire': 'Cote d\'Ivoire',
+	'East Timor': 'Timor-Leste',
+	'Eswatini': 'Swaziland'
 };
+
+// Create a lookup map for country coordinates from the JSON data
+const countryCoordinatesMap = new Map<string, { lat: number; lon: number }>();
+(worldCapitalsData as CountryData[]).forEach(country => {
+	countryCoordinatesMap.set(country.countryName, {
+		lat: parseFloat(country.latitude),
+		lon: parseFloat(country.longitude)
+	});
+});
 
 const CapitalGuessingGame = () => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -289,8 +288,12 @@ const CapitalGuessingGame = () => {
 	};
 
 	const getGeographicalDistance = (guess: string, correctCountry: string): number => {
-		const guessCoords = capitalCoordinates[guess];
-		const correctCoords = capitalCoordinates[correctCountry];
+		// Map country names to their JSON equivalents if they differ
+		const mappedGuess = countryNameMapping[guess] || guess;
+		const mappedCorrectCountry = countryNameMapping[correctCountry] || correctCountry;
+		
+		const guessCoords = countryCoordinatesMap.get(mappedGuess);
+		const correctCoords = countryCoordinatesMap.get(mappedCorrectCountry);
 
 		if (!guessCoords || !correctCoords) {
 			// If we don't have coordinates for either country, return a large number
